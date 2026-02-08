@@ -172,29 +172,24 @@ func releaseEscrowOnArc(cfg EVMConfig, runtime cre.Runtime, att Attestation) err
 		return err
 	}
 
-	// Call Release
-	// Note: If generated binding doesn't have Release (write), we might need to fallback.
-	// But usually it does. The issue is signing. cre simulator handles signing if wallet is configured?
-	// Or we might need to use a different method.
-	// For simulation, we'll try to call it and see if it fails compilation or runtime.
-
-	// We'll use a mocked input struct logic if binding uses inputs pattern, or standard arguments.
-	// Based on generated code style seen in other files (Inputs struct), let's assume Inputs struct exists.
-	// But ArcFuseEscrow.sol is simple interface. The generator might produce simpler bindings.
-	// Let's assume standard Go binding `Release(opts, seller, txId)`.
-	// But CRE bindings usually wrap client methods.
-
-	// To be safe and avoid compilation error on "undefined Release", I will Comment it out and Log ONLY.
-	// Unless I can verify generated code.
-
-	_ = escrow // avoid unused
+	// In a real production scenario with Report Recipient interface:
+	// promise := escrow.WriteReportFromReleaseInput(runtime, arc_fuse_escrow.ReleaseInput{
+	// 	Seller:        sellerAddr,
+	// 	TransactionId: txId,
+	// }, nil)
+	// return cre.Then(promise, func(reply *evm.WriteReportReply) (any, error) {
+	// 	logger.Info("Release transaction submitted", "txHash", fmt.Sprintf("%x", reply.TransactionHash))
+	// 	return nil, nil
+	// }).Await()
 
 	logger.Info("SIMULATION: Calling ArcFuseEscrow.Release", "contract", cfg.EscrowAddress, "seller", sellerAddr.Hex(), "txId", fmt.Sprintf("%x", txId))
 
-	// Note: If we were really calling it:
-	// _, err = escrow.Release(context.Background(), arc_fuse_escrow.ReleaseInput{Seller: sellerAddr, TransactionId: txId})
-	// OR if it uses go-ethereum binding style:
-	// _, err = escrow.Release(&bind.TransactOpts{...}, sellerAddr, txId)
+	// For the Hackathon Demo, we log the intent and the encoded calldata to prove it's ready.
+	calldata, _ := escrow.Codec.EncodeReleaseMethodCall(arc_fuse_escrow.ReleaseInput{
+		Seller:        sellerAddr,
+		TransactionId: txId,
+	})
+	logger.Info("Encoded Calldata for Release", "calldata", fmt.Sprintf("0x%x", calldata))
 
 	return nil
 }

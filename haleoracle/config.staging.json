@@ -12,11 +12,11 @@
       "gasLimit": 1000000
     },
     {
-      "escrowAddress": "0x0000000000000000000000000000000000000000",
+      "escrowAddress": "0x57c8a6466b097B33B3d98Ccd5D9787d426Bfb539",
       "chainName": "arc-testnet",
       "chainSelector": 5042002,
-      "gasLimit": 1000000,
-      "sellerAddress": "0xYourSellerAddress"
+      "gasLimit": 500000,
+      "sellerAddress": "0x876f7ee6D6AA43c5A6cC13c05522eb47363E5907"
     }
   ]
 }
