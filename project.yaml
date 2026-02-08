@@ -1,0 +1,22 @@
+# ==========================================================================
+# CRE PROJECT SETTINGS FILE
+# ==========================================================================
+
+experimental-chains:
+  - chain-selector: 5042002
+    rpc-url: "https://rpc.testnet.arc.network"
+    forwarder: "0x0000000000000000000000000000000000000000"
+
+staging-settings:
+  rpcs:
+    - chain-name: ethereum-testnet-sepolia
+      url: https://ethereum-sepolia-rpc.publicnode.com
+    - chain-name: arc-testnet
+      url: https://rpc.testnet.arc.network
+
+production-settings:
+  rpcs:
+    - chain-name: ethereum-testnet-sepolia
+      url: https://ethereum-sepolia-rpc.publicnode.com
+    - chain-name: arc-testnet
+      url: https://rpc.testnet.arc.network
